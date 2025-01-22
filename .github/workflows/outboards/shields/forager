@@ -3,6 +3,6 @@
 
 outboard_repository=carrefinho/forager-zmk-module
 outboard_ref=main
-outboard_from=config/boards/shields/forager
+outboard_from=boards/shields/forager
 outboard_to=boards/shields/forager
 

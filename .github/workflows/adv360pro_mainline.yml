@@ -25,7 +25,7 @@ jobs:
       - name: Build
         run: |
           cd zmk/app
-          west build -b ${{ matrix.board }} -- -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" -DZMK_EXTRA_MODULES="${GITHUB_WORKSPACE}/config"
+          west build -b ${{ matrix.board }} -- -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
 
       - name: Rename artifacts
         run: |

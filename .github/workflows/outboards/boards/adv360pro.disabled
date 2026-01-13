@@ -5,3 +5,4 @@ outboard_repository=ReFil/zmk
 outboard_ref=advantage360
 outboard_from=app/boards/arm/adv360pro
 outboard_to=boards/arm/adv360pro
+outboard_branches=zmkfirmware/zmk/v0.3.0

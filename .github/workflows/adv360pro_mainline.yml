@@ -1,0 +1,41 @@
+# Build Adv360 with mainline ZMK and static Miryoku layout
+name: 'Build Adv360 (Mainline)'
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: zmkfirmware/zmk-build-arm:stable
+    strategy:
+      fail-fast: false
+      matrix:
+        board: ['adv360pro_left', 'adv360pro_right']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Clone ZMK
+        run: |
+          git clone --depth 1 https://github.com/zmkfirmware/zmk.git zmk
+          cd zmk
+          west init -l app
+          west update
+          west zephyr-export
+
+      - name: Build
+        run: |
+          cd zmk/app
+          west build -b ${{ matrix.board }} -- -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" -DZMK_EXTRA_MODULES="${GITHUB_WORKSPACE}/config"
+
+      - name: Rename artifacts
+        run: |
+          mkdir -p artifacts
+          if [ -f "zmk/app/build/zephyr/zmk.uf2" ]; then
+            cp zmk/app/build/zephyr/zmk.uf2 "artifacts/adv360pro-${{ matrix.board }}-miryoku.uf2"
+          fi
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: adv360pro-${{ matrix.board }}-miryoku-mainline
+          path: artifacts/

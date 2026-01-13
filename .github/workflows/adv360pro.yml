@@ -9,5 +9,6 @@ jobs:
     secrets: inherit
     with:
       board: '["adv360pro_left", "adv360pro_right"]'
+      shield: '["default"]'
       alphas: '["qwerty"]'
       extra: '["colemakdh"]'
